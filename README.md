@@ -11,7 +11,7 @@ If the Nginx service receives a PHP request, it asks the PHP FPM service to load
 
 ### PHP FPM service
 
-It uses multi-stage for downloading dependencies, and then copies the result into the `php:7.3-fpm-alpine` image.
+It uses multi-stage for downloading dependencies and then copies the result into the `php:7.3-fpm-alpine` image.
 
 ### Nginx service
 
