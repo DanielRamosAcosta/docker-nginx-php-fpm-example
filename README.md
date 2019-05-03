@@ -19,4 +19,4 @@ It uses multi-stage for downloading Node dependencies and building the assets. T
 
 ### Results
 
-The [`renderer` image](https://microbadger.com/images/danielramosacosta/renderer-example) it's 38.5Mb, and the [`site` image](https://microbadger.com/images/danielramosacosta/site-example) 8.2Mb which is a total of *46,7Mb for the whole deployment*
+The [`renderer` image](https://microbadger.com/images/danielramosacosta/renderer-example) it's 38.5Mb, and the [`site` image](https://microbadger.com/images/danielramosacosta/site-example) 8.2Mb which is a total of **46,7Mb for the whole deployment**
