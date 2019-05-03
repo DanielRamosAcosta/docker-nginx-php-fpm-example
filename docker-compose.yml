@@ -2,10 +2,17 @@
 version: '3'
 services:
   site:
-    image: nginx:1.16-alpine
+    image: danielramosacosta/site-example
+    build:
+      context: .
+      dockerfile: docker/site.docker
     ports:
       - "8080:80"
-    volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
   renderer:
-    build: .
+    image: danielramosacosta/renderer-example
+    build:
+      context: .
+      dockerfile: docker/renderer.docker
+    environment:
+      APP_KEY: 66B1132A0173910B01EE3A15EF4E6958
+      LOG_CHANNEL: stderr

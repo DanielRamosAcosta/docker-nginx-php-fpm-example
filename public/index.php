@@ -1,40 +1,60 @@
 <?php
 
-  // Include Composer autoload
-  require('../vendor/autoload.php');
+/**
+ * Laravel - A PHP Framework For Web Artisans
+ *
+ * @package  Laravel
+ * @author   Taylor Otwell <taylor@laravel.com>
+ */
 
-  // Create Slim App
-  $app = new \Slim\App();
+define('LARAVEL_START', microtime(true));
 
-  // Create database from JSON
-  $pokedex = json_decode(file_get_contents('pokemon.json'), true);
+/*
+|--------------------------------------------------------------------------
+| Register The Auto Loader
+|--------------------------------------------------------------------------
+|
+| Composer provides a convenient, automatically generated class loader for
+| our application. We just need to utilize it! We'll simply require it
+| into the script here so that we don't have to worry about manual
+| loading any of our classes later on. It feels great to relax.
+|
+*/
 
-  // Fetch Dep. Iny. Container
-  $container = $app->getContainer();
+require __DIR__.'/../vendor/autoload.php';
 
-  // Register Twig View Helper
-  $container['view'] = function($c) {
-    $templates = '../views/';
-    $cache = '../storage/framework/cache/';
+/*
+|--------------------------------------------------------------------------
+| Turn On The Lights
+|--------------------------------------------------------------------------
+|
+| We need to illuminate PHP development, so let us turn on the lights.
+| This bootstraps the framework and gets it ready for use, then it
+| will load up this application so that we can run it and send
+| the responses back to the browser and delight our users.
+|
+*/
 
-    $view = new \Slim\Views\Twig($templates, ['cache' => $cache]);
+$app = require_once __DIR__.'/../bootstrap/app.php';
 
-    return $view;
-  };
+/*
+|--------------------------------------------------------------------------
+| Run The Application
+|--------------------------------------------------------------------------
+|
+| Once we have the application, we can handle the incoming request
+| through the kernel, and send the associated response back to
+| the client's browser allowing them to enjoy the creative
+| and wonderful application we have prepared for them.
+|
+*/
 
-  $app->get('/pokemon/{id}', function($request, $response, $args) use ($pokedex) {
+$kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 
-    $data = [
-      'id' => $args['id'],
-      'pokemon' => $pokedex[ $args['id'] ]
-    ];
+$response = $kernel->handle(
+    $request = Illuminate\Http\Request::capture()
+);
 
-    return $this->view->render($response, 'index.twig', $data);
+$response->send();
 
-  });
-
-  $app->run();
-
-  //d($pokedex);
-
-?>
+$kernel->terminate($request, $response);
